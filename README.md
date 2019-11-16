@@ -12,8 +12,11 @@ nltk.download()'
 install wordnet, punkt tokenizer
 
 ## Install sentiment analyzer library
+
+```
 cd SentimentCore
-git clone https://github.com/xiaohan2012/twitter-sent-dnn sentdnn
-cd sentdnn
+git clone https://github.com/xiaohan2012/twitter-sent-dnn dnnsent
+cd dnnsent
 git fetch origin pull/6/head:python3
 git checkout python3
+```
