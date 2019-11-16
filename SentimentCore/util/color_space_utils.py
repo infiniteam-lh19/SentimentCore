@@ -1,6 +1,16 @@
 import colorsys
 import math
 
+def red_white_green(t):
+    angry_color = (255, 0, 0)
+    neutral_color = (255, 255, 0)
+    happy_color = (0, 255, 0)
+
+    if t < 0.5:
+        return calculate_color(angry_color, neutral_color, 2 * t)
+    else:
+        return calculate_color(neutral_color, happy_color, 2 * (t - 0.5))
+
 def calculate_color(start, end, position):
 
     start_hsv = colorsys.rgb_to_hsv(start[0] / 255.0, start[1] / 255.0, start[2] / 255.0)
