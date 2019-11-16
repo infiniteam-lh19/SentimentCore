@@ -9,7 +9,7 @@ class KeyboardProducer():
 
     def on_event(self, event):
         for listener in self._listeners:
-            listener.consume(event) # TODO
+            listener.consume(event)
 
     def __init__(self):
 
