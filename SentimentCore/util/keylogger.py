@@ -14,6 +14,7 @@ def register_keylogger(dispatcher):
 
         is_space = False
         back_space = False
+        is_enter = False
         c = ''
         try: # Character
             c = key.char
@@ -22,10 +23,12 @@ def register_keylogger(dispatcher):
                 is_space = True
             elif key == Key.backspace: # Backspace
                 back_space = True
+            elif key == Key.enter:
+                is_enter = True
             else: # Other
                 return
 
-        is_terminating = c in terminating
+        is_terminating = c in terminating or is_enter
 
         if is_terminating or is_space:
             if len(last_word) > 0:
