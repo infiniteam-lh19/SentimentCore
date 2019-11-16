@@ -5,6 +5,12 @@ Core Runtime for infiniteam-lh19 LauzHack project
 pip install -r requirements.txt
 python3 main.py
 
+python console
+'import nltk
+nltk.download()'
+
+install wordnet, punkt tokenizer
+
 ## Install sentiment analyzer library
 cd SentimentCore
 git clone https://github.com/xiaohan2012/twitter-sent-dnn sentdnn

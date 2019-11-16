@@ -7,7 +7,7 @@ class Observer(ABC):
     """
 
     @abstractmethod
-    def update(self, subject) -> None:
+    def update(self, emotional_score):
         """
         Receive update from subject.
         """
