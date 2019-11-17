@@ -24,7 +24,7 @@ class LightConsumer(Observer):
 
         for light_id in self._light_ids:
             URL = "http://192.168.1.2/api/{}/lights/{}/state".format(self._token, light_id)
-            BODY = {"on": state, "xy": xy, "bri": self._bri}
+            BODY = {"on": state, "xy": xy, "bri": self._bri, "transitiontime": 15}
             BODY = json.dumps(BODY)
 
             requests.put(url=URL, data=BODY)
