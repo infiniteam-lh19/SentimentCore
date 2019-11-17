@@ -25,6 +25,6 @@ class StateChangeDispatcher(Subject):
             observer.update(self._state)
 
     def event_update(self, state) -> None:
-        if not state == self._state:
-            self._state = state
-            self.notify()
+        #if not state == self._state:
+        self._state = state
+        self.notify()
