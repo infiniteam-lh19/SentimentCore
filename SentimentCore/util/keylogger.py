@@ -16,6 +16,9 @@ last_word = []
 
 terminating = [".", "!", "?"]
 
+is_control_down = False
+
+
 def register_keylogger(dispatcher):
 
     def on_press(key):
@@ -24,6 +27,7 @@ def register_keylogger(dispatcher):
         global start
         global end
         global should_start
+        global is_control_down
 
         is_space = False
         back_space = False
@@ -32,7 +36,9 @@ def register_keylogger(dispatcher):
         try: # Character
             c = key.char
         except AttributeError as ex: # Other
-            if key == Key.space: # Space
+            if key == Key.ctrl:
+                is_control_down = True
+            elif key == Key.space: # Space
                 is_space = True
             elif key == Key.backspace: # Backspace
                 back_space = True
@@ -40,6 +46,9 @@ def register_keylogger(dispatcher):
                 is_enter = True
             else: # Other
                 return
+
+        if is_control_down:
+            return
 
         if should_start:
             should_start = False
@@ -57,9 +66,10 @@ def register_keylogger(dispatcher):
 
             end = current_millis()
 
-            print("'%s' / %s" % (sentence, score))
+            if len(sentence.strip()) > 0:
+                print("'%s' / %s" % (sentence, score))
 
-            dispatcher.event_update((sentence, score, start, end))
+                dispatcher.event_update((sentence, score, start, end))
 
             should_start = True
 
@@ -78,6 +88,13 @@ def register_keylogger(dispatcher):
         else:
             last_word.append(c)
 
-    with Listener(on_press=on_press) as listener:
+    def on_release(key):
+        global is_control_down
+
+        if key == Key.ctrl:
+            is_control_down = False
+
+
+    with Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
