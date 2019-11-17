@@ -12,8 +12,7 @@ class LightConsumer(Observer):
 
     def __init__(self):
         self._token = "U5n6uDzCWE0dyMGOU3auhvRKS7WaxCYiWHeMIAxx"
-        self._light_ids = [1, 2]
-        self._bri = 30
+        self._light_ids = [(1, 30), (2, 100)]
         self._converter = Converter()
 
     def update(self, tuple):
@@ -22,9 +21,9 @@ class LightConsumer(Observer):
         xy = self._converter.rgb_to_xy(r, g, b)
         state = True
 
-        for light_id in self._light_ids:
+        for light_id, brightness in self._light_ids:
             URL = "http://192.168.1.2/api/{}/lights/{}/state".format(self._token, light_id)
-            BODY = {"on": state, "xy": xy, "bri": self._bri}
+            BODY = {"on": state, "xy": xy, "bri": brightness}
             BODY = json.dumps(BODY)
 
             requests.put(url=URL, data=BODY)
