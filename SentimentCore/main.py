@@ -5,6 +5,8 @@ from SentimentCore.consumer.keyboard_consumer import KeyboardConsumer
 from SentimentCore.consumer.light_consumer import LightConsumer
 from SentimentCore.core.state_change_dispatcher import StateChangeDispatcher
 
+from SentimentCore.util.keylogger import register_keylogger
+
 
 def main():
     print("Test")
@@ -15,6 +17,8 @@ def main():
 
     dispatcher.attach(lightConsumer)
     dispatcher.attach(keyboardConsumer)
+
+    register_keylogger(dispatcher)
 
     while True:
         dispatcher.event_update(random.random())
