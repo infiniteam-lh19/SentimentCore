@@ -1,5 +1,15 @@
 from pynput.keyboard import Key, Listener
 from dnnsent import sentiment
+import time
+
+
+def current_millis():
+    return round(time.time() * 1000)
+
+
+start = 0
+end = 0
+should_start = True
 
 last_sentence = []
 last_word = []
@@ -11,6 +21,9 @@ def register_keylogger(dispatcher):
     def on_press(key):
         global last_word
         global last_sentence
+        global start
+        global end
+        global should_start
 
         is_space = False
         back_space = False
@@ -28,6 +41,10 @@ def register_keylogger(dispatcher):
             else: # Other
                 return
 
+        if should_start:
+            should_start = False
+            start = current_millis()
+
         is_terminating = c in terminating or is_enter
 
         if is_terminating or is_space:
@@ -38,9 +55,13 @@ def register_keylogger(dispatcher):
             sentence = " ".join(last_sentence)
             score = sentiment.sentiment_score(sentence)
 
+            end = current_millis()
+
             print("'%s' / %s" % (sentence, score))
 
-            dispatcher.event_update(score)
+            dispatcher.event_update((sentence, score, start, end))
+
+            should_start = True
 
             last_word.clear()
             last_sentence.clear()
@@ -52,7 +73,8 @@ def register_keylogger(dispatcher):
             else:
                 if len(last_sentence) > 0:
                     last_word = list(last_sentence.pop())
-                # Else nothing
+                else:  # Nothing
+                    should_start = True
         else:
             last_word.append(c)
 

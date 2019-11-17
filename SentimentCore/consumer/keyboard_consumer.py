@@ -7,7 +7,8 @@ class KeyboardConsumer(Observer):
     def __init__(self):
         pass
 
-    def update(self, emotional_score):
+    def update(self, tuple):
+        sentence, emotional_score, start, end = tuple
         r, g, b = red_white_green(emotional_score)
         print("Color is: %s, %s, %s" %(r, g, b))
         keyboard_driver.set_color_all_nc(keyboard_driver.hex(r, g, b))
