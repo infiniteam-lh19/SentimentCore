@@ -24,7 +24,7 @@ class WebSocketConsumer(Observer):
         threading.Thread(target=self.start).start()
 
     def update(self, tuple):
-        sentence, emotional_score, start, end = tuple
-        self.socketio.emit('update', {'source': 0, 'text': sentence, 'score': emotional_score, 'start': start, 'end': end})
+        sentence, emotional_score, source, start, end = tuple
+        self.socketio.emit('update', {'source': source, 'text': sentence, 'score': emotional_score, 'start': start, 'end': end})
 
 

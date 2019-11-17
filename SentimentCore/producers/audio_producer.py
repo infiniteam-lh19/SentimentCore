@@ -2,17 +2,15 @@ from __future__ import division
 
 import re
 import sys
+import time
 
-from google.cloud import speech
+from google.cloud import speech, speech_v1p1beta1
 from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
 
 class AudioProducer():
-
-    def __init__(self):
-        self._i = 0
 
     def __iter__(self):
         # See http://g.co/cloud/speech/docs/languages
@@ -36,7 +34,8 @@ class AudioProducer():
             responses = client.streaming_recognize(streaming_config, requests)
 
             # Now, put the transcription responses to use.
-            yield listen_print_loop(responses)
+            while True:
+                yield listen_print_loop(responses)
 
 
 # Audio recording parameters
@@ -153,7 +152,6 @@ def listen_print_loop(responses):
             num_chars_printed = len(transcript)
 
         else:
-            print(transcript + overwrite_chars)
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
@@ -163,3 +161,4 @@ def listen_print_loop(responses):
 
             num_chars_printed = 0
 
+            return (transcript + overwrite_chars)

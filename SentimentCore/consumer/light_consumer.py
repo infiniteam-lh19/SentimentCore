@@ -17,7 +17,7 @@ class LightConsumer(Observer):
         self._converter = Converter()
 
     def update(self, tuple):
-        sentence, emotional_score, start, end = tuple
+        sentence, emotional_score, _, start, end = tuple
         r, g, b = red_white_green(emotional_score)
         xy = self._converter.rgb_to_xy(r, g, b)
         state = True
