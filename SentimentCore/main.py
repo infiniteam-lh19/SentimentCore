@@ -3,6 +3,7 @@ from time import sleep
 
 from SentimentCore.consumer.keyboard_consumer import KeyboardConsumer
 from SentimentCore.consumer.light_consumer import LightConsumer
+from SentimentCore.consumer.websocket_consumer import WebSocketConsumer
 from SentimentCore.core.state_change_dispatcher import StateChangeDispatcher
 
 from SentimentCore.util.keylogger import register_keylogger
@@ -14,9 +15,11 @@ def main():
     dispatcher = StateChangeDispatcher()
     keyboardConsumer = KeyboardConsumer()
     lightConsumer = LightConsumer()
+    websocketConsumer = WebSocketConsumer()
 
     dispatcher.attach(lightConsumer)
     dispatcher.attach(keyboardConsumer)
+    dispatcher.attach(websocketConsumer)
 
     register_keylogger(dispatcher)
 
