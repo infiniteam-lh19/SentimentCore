@@ -16,7 +16,7 @@ class WebSocketConsumer(Observer):
     def start(self):
         self.app = Flask(__name__)
         self.app.config['SECRET_KEY'] = 'secret!'
-        self.socketio = SocketIO(self.app)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*")
         self.socketio.run(self.app)
         print("Websocket server started.")
 
@@ -24,6 +24,6 @@ class WebSocketConsumer(Observer):
         threading.Thread(target=self.start).start()
 
     def update(self, emotional_score):
-        socketio.emit('update', {'score': emotional_score})
+        self.socketio.emit('update', {'score': emotional_score})
 
 
