@@ -20,6 +20,7 @@ is_control_down = False
 
 
 def register_keylogger(dispatcher):
+    print("register keylogger")
 
     def on_press(key):
         global last_word
@@ -68,8 +69,7 @@ def register_keylogger(dispatcher):
 
             if len(sentence.strip()) > 0:
                 print("'%s' / %s" % (sentence, score))
-
-                dispatcher.event_update((sentence, score, start, end))
+                dispatcher.event_update((sentence, score, 0, start, end))
 
             should_start = True
 
